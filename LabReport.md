@@ -16,11 +16,35 @@ matplotlib
 
 ## 实验过程
 
-1. 爬取抖音评论
+1. 分析掘金网站结构，登录窗口的滑块验证js方式
 
-2. 清洗数据
+![](./resources/LabImage1.png)
+![](./resources/iframe1.png)
 
-3. 分析数据
+```python
+# 获取frame
+from playwright.sync_api import sync_playwright
+p=sync_playwright().start()
+browser=p.chromium.launch(headless=False)
+page=browser.new_page()
+page.goto("https://cdn2.byhy.net/files/selenium/sample2.html")
+frame = page.frame_locator("iframe[src='sample1.html']")
+
+# 再 在其内部进行定位
+lcs = frame.locator('.animal').all()
+```
+
+2. 编写爬虫代码，通过selenium库模拟浏览器行为，获取滑块验证码图片，并调用第三方库识别滑块验证码
+
+![](./resources/LabImage2.png)
+
+3. 编写爬虫代码，通过selenium库模拟浏览器行为，获取滑块验证码图片，并调用第三方库识别滑块验证码
+
+![](./resources/LabImage3.png)
+
+4. 清洗数据
+
+5. 分析数据
 
 ## 实验结果
 
