@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright 
-from fake_useragent import UserAgent
+# from fake_useragent import UserAgent
          
 import RequestforImages
 import requests
@@ -107,11 +107,14 @@ def LogInWebsite():
             UrlAndDst=[('./resources/basic.jpeg',basicimg.get_attribute("src")),
            ('./resources/action.png',actionimg.get_attribute("src"))]
 
+            print("当前验证码背景图片网页地址：",basicimg.get_attribute("src"))
+            print("当前验证码移动滑块网页地址：",actionimg.get_attribute("src"))
             
             BasicWidth,BasicHeight,ActionWidth,ActionHeight=RequestforImages.GetImages(UrlAndDst)
             X=CVPassComfirm.GetXtoMove("./resources/basic.jpeg","./resources/action.png",BasicHeight,BasicWidth,ActionHeight,ActionWidth)
             
-            X=X+ActionWidth/2
+            #X=X+ActionWidth/2
+            #这里是不需要进行修正的，如果修正会多出一部分
             print("x: ",X)
         
             #Button = page.frame_locator("iframe").locator(".captcha-slider-btn")
@@ -134,13 +137,13 @@ def LogInWebsite():
             start = 1  
             end = X  
             step = (end - start) / 10 # 计算递增步长  
-            # for i in range(10):  
-            #     if i == 9:  
-            #         number = X  
-            #     else:  
-            #         number = start + i * step  
-            #     page.mouse.move(DraggerBox["x"] + number, DraggerBox["y"] + random.randint(-10, 10), steps=4)  
-            page.mouse.move(DraggerBox["x"] + X, DraggerBox["y"] + random.randint(-10, 10), steps=6)  
+            for i in range(10):  
+                if i == 9:  
+                    number = X  
+                else:  
+                    number = start + i * step  
+                page.mouse.move(DraggerBox["x"] + number, DraggerBox["y"] + random.randint(-10, 10), steps=4)  
+            #page.mouse.move(DraggerBox["x"] + X, DraggerBox["y"] + random.randint(-10, 10), steps=6)  
             
             page.mouse.up()  
      

@@ -6,8 +6,13 @@ import cv2
 import requests  
  
 import cv2
- 
-   
+
+#====================================================================================
+#这个函数是用来获取滑块的移动距离的，这个函数是通过opencv来实现的
+#此处有一个问题，就是有些时候使用opencv进行识别的时候会由于验证码的迷惑度比较高而导致验证失败
+#====================================================================================
+
+
 def GetXtoMove(image_path, template_path, image_height, image_width, template_height, template_width):  
     # 背景图  
     image = cv2.imread(image_path)  
