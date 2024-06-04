@@ -1,5 +1,12 @@
-import requests
-url = 'https://p6-catpcha.byteimg.com/tos-cn-i-188rlo5p4y/27f052252dfb430caffcc8d1d5cb3d8a~tplv-188rlo5p4y-2.jpeg'
-res = requests.get(url)
-with open('test.jpg', 'wb') as f:
-    f.write(res.content)
+import ddddocr
+
+det = ddddocr.DdddOcr(det=False, ocr=False, show_ad=False)
+
+with open('./resources/action.png', 'rb') as f:
+    target_bytes = f.read()
+
+with open('./resources/basic.jpeg', 'rb') as f:
+    background_bytes = f.read()
+
+res = det.slide_match(target_bytes, background_bytes, simple_target=True)
+print(res)

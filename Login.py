@@ -89,7 +89,7 @@ def LogInWebsite():
         #很多地方出现问题的根源都是这个，时间太短没有加载到位，因此而产生的问题都可以使用wait_for_timeout来解决
         #================================================================================================
         login_flag = False  
-        count = 2  
+        count = 10
         while not login_flag and count>0:  
             basicimg=page.frame_locator("iframe").get_by_role("img", name="basicImg")
             actionimg=page.frame_locator("iframe").get_by_role("img", name="actionImg")
@@ -113,8 +113,8 @@ def LogInWebsite():
             BasicWidth,BasicHeight,ActionWidth,ActionHeight=RequestforImages.GetImages(UrlAndDst)
             X=CVPassComfirm.GetXtoMove("./resources/basic.jpeg","./resources/action.png",BasicHeight,BasicWidth,ActionHeight,ActionWidth)
             
-            #X=X+ActionWidth/2
-            #这里是不需要进行修正的，如果修正会多出一部分
+            X=X - 55
+            #这里是需要进行修正的，如果修正会多出一部分
             print("x: ",X)
         
             #Button = page.frame_locator("iframe").locator(".captcha-slider-btn")
@@ -137,23 +137,25 @@ def LogInWebsite():
             start = 1  
             end = X  
             step = (end - start) / 10 # 计算递增步长  
-            for i in range(10):  
-                if i == 9:  
-                    number = X  
-                else:  
-                    number = start + i * step  
-                page.mouse.move(DraggerBox["x"] + number, DraggerBox["y"] + random.randint(-10, 10), steps=4)  
-            #page.mouse.move(DraggerBox["x"] + X, DraggerBox["y"] + random.randint(-10, 10), steps=6)  
-            
+            # for i in range(10):  
+            #     if i == 9:  
+            #         number = X  
+            #     else:  
+            #         number = start + i * step  
+            #     page.mouse.move(DraggerBox["x"] + number, DraggerBox["y"] + random.randint(-10, 10), steps=4)  
+            page.mouse.move(DraggerBox["x"]+X, DraggerBox["y"] + random.randint(-10, 10), steps=5)  
+     
+            page.wait_for_timeout(1000)       
             page.mouse.up()  
      
-            # page.wait_for_timeout(2000)  
-            try:  
-                page.frame_locator("iframe").locator("a").filter(has_text="刷新").wait_for(timeout=1000)  
-                count = count - 1  
-            except Exception as e:  
-                print("登录成功")  
-                login_flag = True 
+            page.wait_for_timeout(3000)  
+            count=count-1
+            # try:  
+            #     page.frame_locator("iframe").locator("a").filter(has_text="刷新").wait_for(timeout=1000)  
+            #     count = count - 1  
+            # except Exception as e:  
+            #     print("登录成功")  
+            #     login_flag = True 
             #注意，下面这种写法的行为是不对的：
             #Button = page.frame_locator("iframe").locator(".captcha-slider-btn")
             #Button.click()
