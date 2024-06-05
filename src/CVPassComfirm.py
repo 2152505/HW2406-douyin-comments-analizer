@@ -14,77 +14,77 @@ import cv2
 
 
 def GetXtoMove(image_path, template_path, image_height, image_width, template_height, template_width):  
-    # # 背景图  
-    # image = cv2.imread(image_path)  
-    # image_resize = cv2.resize(image, (image_width, image_height))  
-    # # 处理图像，保留大部分白色  
-    # ret, thresholded_image = cv2.threshold(image_resize, 220, 255, cv2.THRESH_BINARY)  
+    # 背景图  
+    image = cv2.imread(image_path)  
+    image_resize = cv2.resize(image, (image_width, image_height))  
+    # 处理图像，保留大部分白色  
+    ret, thresholded_image = cv2.threshold(image_resize, 220, 255, cv2.THRESH_BINARY)  
     
-    # # 灰度图像  
-    # gray_image1 = cv2.cvtColor(thresholded_image, cv2.COLOR_BGR2GRAY)  
-    # cv2.imshow("MethodCV: gray_image1",gray_image1)
-    # cv2.waitKey(0)
+    # 灰度图像  
+    gray_image1 = cv2.cvtColor(thresholded_image, cv2.COLOR_BGR2GRAY)  
+    cv2.imshow("MethodCV: gray_image1",gray_image1)
+    cv2.waitKey(0)
     
-    # # # 提高对比度  
-    # denoised_image1 = cv2.equalizeHist(gray_image1)  
-    # # 边缘检测  
-    # image_canny = cv2.Canny(denoised_image1, threshold1=500, threshold2=900)  
-    # cv2.imshow("MethodCV: image_canny",image_canny)
-    # cv2.waitKey(0)
-    # #===============================================================
-    # #在调试的时候一定要注意，如果不加waitkey(0)的话，会导致窗口一闪而过，看不到效果
-    # #===============================================================
-    # # 滑动图  
-    # template = cv2.imread(template_path)  
-    # template_resize = cv2.resize(template, (template_width, template_height))  
-    # template_gray = cv2.cvtColor(template_resize, cv2.COLOR_BGR2GRAY)  
-    # denoised_image2 = cv2.equalizeHist(template_gray)  
-    # template_canny = cv2.Canny(denoised_image2, threshold1=650, threshold2=900)  
-    # cv2.imshow("MethodCV: template_canny",template_canny)
-    # cv2.waitKey(0)
+    # # 提高对比度  
+    denoised_image1 = cv2.equalizeHist(gray_image1)  
+    # 边缘检测  
+    image_canny = cv2.Canny(denoised_image1, threshold1=500, threshold2=900)  
+    cv2.imshow("MethodCV: image_canny",image_canny)
+    cv2.waitKey(0)
+    #===============================================================
+    #在调试的时候一定要注意，如果不加waitkey(0)的话，会导致窗口一闪而过，看不到效果
+    #===============================================================
+    # 滑动图  
+    template = cv2.imread(template_path)  
+    template_resize = cv2.resize(template, (template_width, template_height))  
+    template_gray = cv2.cvtColor(template_resize, cv2.COLOR_BGR2GRAY)  
+    denoised_image2 = cv2.equalizeHist(template_gray)  
+    template_canny = cv2.Canny(denoised_image2, threshold1=650, threshold2=900)  
+    cv2.imshow("MethodCV: template_canny",template_canny)
+    cv2.waitKey(0)
     
     
-    # # # 进行模板匹配  
-    # # MatchTemplate(InputArray image, InputArray templ, OutputArray result, int method);
+    # # 进行模板匹配  
+    # MatchTemplate(InputArray image, InputArray templ, OutputArray result, int method);
 
-    # # image：输入一个待匹配的图像，支持8U或者32F。
+    # image：输入一个待匹配的图像，支持8U或者32F。
 
-    # # templ：输入一个模板图像，与image相同类型。
+    # templ：输入一个模板图像，与image相同类型。
 
-    # # result：输出保存结果的矩阵，32F类型。
+    # result：输出保存结果的矩阵，32F类型。
 
-    # # method：要使用的数据比较方法。
-    # result = cv2.matchTemplate(image_canny, template_canny, cv2.TM_CCOEFF_NORMED)  
+    # method：要使用的数据比较方法。
+    result = cv2.matchTemplate(image_canny, template_canny, cv2.TM_CCOEFF_NORMED)  
   
-    # # 获取匹配结果的位置  
-    # min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)  
+    # 获取匹配结果的位置  
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)  
   
-    # top_left2 = max_loc  
-    # bottom_right2 = (top_left2[0] + template_resize.shape[1], top_left2[1] + template_resize.shape[0])  
-    # # 在输入图像上绘制矩形标记  
-    # cv2.rectangle(image_resize, top_left2, bottom_right2, (0, 0, 255), 2)  
-    # cv2.imwrite('./result/'+str(int(time.time()))+'.jpg', image_resize)  
-    # # x位置  
-    # #return max_loc[0]  
+    top_left2 = max_loc  
+    bottom_right2 = (top_left2[0] + template_resize.shape[1], top_left2[1] + template_resize.shape[0])  
+    # 在输入图像上绘制矩形标记  
+    cv2.rectangle(image_resize, top_left2, bottom_right2, (0, 0, 255), 2)  
+    cv2.imwrite('./result/'+str(int(time.time()))+'.jpg', image_resize)  
+    # x位置  
+    return max_loc[0]  
 
     #====================================================================================
-    #这种办法的精准度太低，使用ddddocr的api进行识别
+    #这种办法的精准度太低，使用ddddocr进行识别
     #====================================================================================
 
-    det = ddddocr.DdddOcr(det=False, ocr=False, show_ad=False)
+    # det = ddddocr.DdddOcr(det=False, ocr=False, show_ad=False)
 
-    with open(template_path, 'rb') as f:
-        target_bytes = f.read()
+    # with open(template_path, 'rb') as f:
+    #     target_bytes = f.read()
 
-    with open(image_path, 'rb') as f:
-        background_bytes = f.read()
+    # with open(image_path, 'rb') as f:
+    #     background_bytes = f.read()
 
-    res = det.slide_match(target_bytes, background_bytes, simple_target=True)
-    return res['target'][0]
+    # res = det.slide_match(target_bytes, background_bytes, simple_target=True)
+    # return res['target'][0]
 
 
 if __name__ == '__main__':
-    print(GetXtoMove("./resources/basic.jpeg", "./resources/action.png", 344, 552, 110, 110))
+    print(GetXtoMove("../resources/basic.jpeg", "../resources/action.png", 344, 552, 110, 110))
 
 #=====================================================================
 #注意一个报错，这个报错和函数本身无关，问题是图片路径有问题，没读取到图片
