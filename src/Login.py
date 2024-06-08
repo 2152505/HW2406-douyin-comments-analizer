@@ -191,7 +191,7 @@ def LogInWebsite():
             browser = p.chromium.launch(channel="msedge",headless=False)  
             #browser = p.chromium.launch(headless=False)   
             context = browser.new_context() 
-            
+            context.tracing.start(snapshots=True, sources=True, screenshots=True)
             page = browser.new_page()  
             page.goto("https://juejin.cn/")  
             page.wait_for_timeout(1000)  
@@ -209,7 +209,8 @@ def LogInWebsite():
             page.get_by_placeholder("请输入密码").fill("Lxy252799")  
             page.wait_for_timeout(1000)  
 
-            page.get_by_role("button", name="登录", exact=True).click()  
+            page.get_by_role("button", name="登录", exact=True).click() 
+             
                 # 判断是否登陆成功
             page.wait_for_timeout(10000)
             print(page.get_by_role("img", name="用户063576163573的头像").get_attribute('src'))
@@ -230,7 +231,7 @@ def LogInWebsite():
         # 使用已保存的状态文件跳过登录状态直接访问系统
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch()
-                
+            context.tracing.start(snapshots=True, sources=True, screenshots=True)
                 # 创建浏览器上下文时加载状态文件
             context = browser.new_context(storage_state='../auth/CrawCookies.json')
             page = context.new_page()
