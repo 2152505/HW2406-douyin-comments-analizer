@@ -280,3 +280,8 @@ def api_get_subtitle():
 
 [重复可被定位元素报错](./reference/重复可被定位元素报错.html)
 
+[Flask不要在生产环境中使用开发服务器](./reference/Flask%20不要在生产环境中使用开发服务器.html)
+
+[flask切换生产环境](./reference/flask切换生产环境.html)
+
+[bilibili api简要介绍](./reference/bilibili%20api简要介绍.html)

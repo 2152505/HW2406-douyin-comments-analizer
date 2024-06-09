@@ -107,13 +107,23 @@ lcs = frame.locator('.animal').all()
 - 获取到的文章标题在控制台输出：
 ![](../douyin-comments-analizer/resources/title.png)
 
+- 使用词云进行分析
+
+![](./resources/wordcloud.png)
+
 - 使用情感分析库或模型对文章内容进行情感倾向性判断。
 
-#### 1.5.UI界面设计
+![](./resources/emotiondistribution.png)
+
+#### 1.5.Topic统计
+
+![](./resources/topicwords.png)
+
+#### 1.6.UI界面设计
 
 ![](./resources/UI.png)
 
-#### 1.6.实验结果
+#### 1.7.实验结果
 
 - 成功爬取了掘金网站上特定话题下的100篇文章。
 - 通过情感分析，发现大部分文章呈现积极正面的情绪，少部分文章中性或略带负面情绪。
@@ -125,7 +135,7 @@ lcs = frame.locator('.animal').all()
 
 - 安装bilibili api和相关库（bilibili api，dotenv，flask等）。
 #### 2.2. 使用blueprint建设网络
-定义一个名为bili_tools的Flask蓝图，该蓝图包含了四个路由，每个路由都对应一个特定的功能。
+我通过定义一个名为bili_tools的Flask蓝图，该蓝图包含了四个路由，每个路由都对应一个特定的功能。
 
 - @bili_tools.route('/search', methods=['GET'])：这个路由用于搜索Bilibili视频。它接收两个GET参数：keyword（默认值为'默认关键词'）和time_duration（默认值为1）。这些参数被用来创建一个BiliSearch任务，该任务运行后返回搜索结果。如果任务出错，会抛出一个InvalidAPIUsage异常。
 
@@ -220,6 +230,7 @@ def api_get_subtitle():
 ![](./resources/bilibilihot.png)
 ![](./resources/flaskappsearch.png)
 
+
 #### 注意app的访问路径
 
 如果这段代码运行后访问本地网址报错
@@ -269,3 +280,8 @@ def api_get_subtitle():
 
 [重复可被定位元素报错](./reference/重复可被定位元素报错.html)
 
+[Flask不要在生产环境中使用开发服务器](./reference/Flask%20不要在生产环境中使用开发服务器.html)
+
+[flask切换生产环境](./reference/flask切换生产环境.html)
+
+[bilibili api简要介绍](./reference/bilibili%20api简要介绍.html)
