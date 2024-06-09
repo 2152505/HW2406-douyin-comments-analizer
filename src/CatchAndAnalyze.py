@@ -115,7 +115,7 @@ def CatshAndAnalyze(url, keyword="红楼梦"):
         page.get_by_role("button", name="登录", exact=True).click() 
              
                 # 判断是否登陆成功
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(10000)
         
         
         page.get_by_placeholder("探索稀土掘金").click()
@@ -125,7 +125,7 @@ def CatshAndAnalyze(url, keyword="红楼梦"):
         page.get_by_role("search").get_by_role("img").click()
         with page.expect_popup() as page1_info:
             page.get_by_role("link", name="图解 Vue 3 组件通信：红楼梦剧情演绎版", exact=True).click()
-            page.get_by_role("link", exact=True).click()
+            #page.get_by_role("link", exact=True).click()
         page1 = page1_info.value
         #page1.get_by_role("heading", name="生拉硬扯：从红楼梦到 Vue").click()
         print(page1)
